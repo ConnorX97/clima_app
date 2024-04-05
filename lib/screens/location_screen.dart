@@ -13,7 +13,7 @@ class LocationScreen extends StatefulWidget {
 
 class _LocationScreenState extends State<LocationScreen> {
   WeatherModel weather = WeatherModel();
-  late int temperature;
+  late var temperature;
   late String cityName;
   late String weatherMessage;
   late String weatherIcon;
@@ -27,19 +27,20 @@ class _LocationScreenState extends State<LocationScreen> {
   void updateUI(dynamic weatherData) {
     setState(() {
       if (weatherData == null) {
-        temperature = 0;
-        weatherIcon = 'error';
+        temperature = "Error";
+        weatherIcon = ' ';
         weatherMessage = "Unable to get weather data";
         cityName = " ";
+      } else {
+        double temp = weatherData['main']['temp'];
+        temperature = temp.toInt();
+
+        var condition = weatherData['weather'][0]['id'];
+        weatherIcon = weather.getWeatherIcon(condition);
+
+        weatherMessage = weather.getMessage(temperature);
+        cityName = weatherData["name"];
       }
-      double temp = weatherData['main']['temp'];
-      temperature = temp.toInt();
-
-      var condition = weatherData['weather'][0]['id'];
-      weatherIcon = weather.getWeatherIcon(condition);
-
-      weatherMessage = weather.getMessage(temperature);
-      cityName = weatherData["name"];
     });
   }
 
@@ -82,7 +83,13 @@ class _LocationScreenState extends State<LocationScreen> {
                           builder: (context) => CityScreen(),
                         ),
                       );
-                      print(typedName);
+                      if (typedName != null) {
+                        var weatherData =
+                            await weather.getCityWeather(typedName);
+                        updateUI(weatherData);
+                      } else {
+                        print("Error");
+                      }
                     },
                     child: const Icon(
                       Icons.location_city,
