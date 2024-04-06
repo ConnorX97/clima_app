@@ -1,5 +1,6 @@
 import 'package:clima_app/services/location.dart';
 import 'package:clima_app/services/networking.dart';
+import 'package:lottie/lottie.dart';
 
 const apiKey = '37bf7f0406119357fc510e0a37e31bcd';
 const openWeatherMapURL = "https://api.openweathermap.org/data/2.5/weather";
@@ -25,33 +26,41 @@ class WeatherModel {
 
   String getWeatherIcon(int condition) {
     if (condition < 300) {
-      return '🌩';
+      return "assets/thunder.json";
     } else if (condition < 400) {
-      return '🌧';
+      return "assets/rain.json";
     } else if (condition < 600) {
-      return '☔️';
+      return "assets/lightRain.json";
     } else if (condition < 700) {
-      return '☃️';
+      return "assets/snow.json";
     } else if (condition < 800) {
-      return '🌫';
+      return "assets/mist.json";
     } else if (condition == 800) {
-      return '☀️';
+      return "assets/sun.json";
     } else if (condition <= 804) {
-      return '☁️';
+      return "assets/cloud.json";
     } else {
       return '🤷‍';
     }
   }
 
-  String getMessage(int temp) {
-    if (temp > 25) {
-      return 'It\'s 🍦 time';
-    } else if (temp > 20) {
-      return 'Time for shorts and 👕';
-    } else if (temp < 10) {
-      return 'You\'ll need 🧣 and 🧤';
+  String getMessage(condition) {
+    if (condition < 300) {
+      return "Chaqmoq";
+    } else if (condition < 400) {
+      return "Yomg'ir";
+    } else if (condition < 600) {
+      return "Yengil yomg'ir";
+    } else if (condition < 700) {
+      return "Qor";
+    } else if (condition < 800) {
+      return "Tuman";
+    } else if (condition == 800) {
+      return "Ochiq";
+    } else if (condition <= 804) {
+      return "Bulut";
     } else {
-      return 'Bring a 🧥 just in case';
+      return '🤷‍';
     }
   }
 }

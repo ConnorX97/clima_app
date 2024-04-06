@@ -2,6 +2,7 @@ import 'package:clima_app/screens/city_screen.dart';
 import 'package:clima_app/services/weather.dart';
 import 'package:clima_app/utilities/constants.dart';
 import 'package:flutter/material.dart';
+import 'package:lottie/lottie.dart';
 
 class LocationScreen extends StatefulWidget {
   final locationWeather;
@@ -27,9 +28,9 @@ class _LocationScreenState extends State<LocationScreen> {
   void updateUI(dynamic weatherData) {
     setState(() {
       if (weatherData == null) {
-        temperature = "Error";
-        weatherIcon = ' ';
-        weatherMessage = "Unable to get weather data";
+        temperature = "Xatolik";
+        weatherIcon;
+        weatherMessage = "Shahar nomi kiritilmadi yoki topilmadi";
         cityName = " ";
       } else {
         double temp = weatherData['main']['temp'];
@@ -38,24 +39,16 @@ class _LocationScreenState extends State<LocationScreen> {
         var condition = weatherData['weather'][0]['id'];
         weatherIcon = weather.getWeatherIcon(condition);
 
-        weatherMessage = weather.getMessage(temperature);
+        weatherMessage = weather.getMessage(condition);
         cityName = weatherData["name"];
       }
     });
   }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: const AssetImage('images/location_background.jpg'),
-            fit: BoxFit.cover,
-            colorFilter: ColorFilter.mode(
-                Colors.white.withOpacity(0.8), BlendMode.dstATop),
-          ),
-        ),
+        color: Color(0xFFc9cddd),
         constraints: const BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
@@ -72,7 +65,8 @@ class _LocationScreenState extends State<LocationScreen> {
                     },
                     child: const Icon(
                       Icons.near_me,
-                      size: 50.0,
+                      size: 30.0,
+                      color: Color(0xFF503c52),
                     ),
                   ),
                   TextButton(
@@ -93,34 +87,42 @@ class _LocationScreenState extends State<LocationScreen> {
                     },
                     child: const Icon(
                       Icons.location_city,
-                      size: 50.0,
+                      size: 30.0,
+                      color: Color(0xFF503c52),
                     ),
                   ),
                 ],
               ),
-              Padding(
-                padding: EdgeInsets.only(left: 15.0),
-                child: Row(
-                  children: <Widget>[
-                    Text(
-                      "$temperature",
-                      style: kTempTextStyle,
-                    ),
-                    Text(
-                      weatherIcon,
-                      style: kConditionTextStyle,
-                    ),
-                  ],
-                ),
+              Column(
+                children: <Widget>[
+                  Text(
+                    "$cityName",
+                    textAlign: TextAlign.center,
+                    style: kMessageTextStyle,
+                  ),
+                  Container(
+                    height: 400,
+                    child: Lottie.asset(weatherIcon),
+                  ),
+                  Text(
+                    weatherMessage,
+                    style: kMessageTextStyle,
+                    textAlign: TextAlign.center,
+                    
+                  ),
+                  const SizedBox(
+                    height: 30,
+                  ),
+                  Text(
+                    "$temperature°",
+                    textAlign: TextAlign.center,
+                    style: kTempTextStyle,
+                  ),
+                ],
               ),
-              Padding(
-                padding: EdgeInsets.only(right: 15.0),
-                child: Text(
-                  "$weatherMessage in $cityName",
-                  textAlign: TextAlign.right,
-                  style: kMessageTextStyle,
-                ),
-              ),
+              const SizedBox(
+                height: 30,
+              )
             ],
           ),
         ),

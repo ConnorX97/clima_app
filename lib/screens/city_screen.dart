@@ -12,12 +12,7 @@ class _CityScreenState extends State<CityScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: Container(
-        decoration: const BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('images/city_background.jpg'),
-            fit: BoxFit.cover,
-          ),
-        ),
+      color: Color(0xFF88a2bd),
         constraints: BoxConstraints.expand(),
         child: SafeArea(
           child: Column(
@@ -30,7 +25,8 @@ class _CityScreenState extends State<CityScreen> {
                   },
                   child: const Icon(
                     Icons.arrow_back_ios,
-                    size: 50.0,
+                    size: 25.0,
+                    color: Color(0xFF506a8f),
                   ),
                 ),
               ),
@@ -49,8 +45,9 @@ class _CityScreenState extends State<CityScreen> {
                   Navigator.pop(context, cityName);
                 },
                 child: const Text(
-                  'Get Weather',
+                  'Aniqlash',
                   style: kButtonTextStyle,
+                  
                 ),
               ),
             ],
