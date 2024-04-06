@@ -44,6 +44,7 @@ class _LocationScreenState extends State<LocationScreen> {
       }
     });
   }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,43 +56,46 @@ class _LocationScreenState extends State<LocationScreen> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: <Widget>[
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: <Widget>[
-                  TextButton(
-                    onPressed: () async {
-                      var weatherData = await weather.getLocationWeather();
-                      updateUI(weatherData);
-                    },
-                    child: const Icon(
-                      Icons.near_me,
-                      size: 30.0,
-                      color: Color(0xFF503c52),
-                    ),
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      var typedName = await Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => CityScreen(),
-                        ),
-                      );
-                      if (typedName != null) {
-                        var weatherData =
-                            await weather.getCityWeather(typedName);
+              Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: <Widget>[
+                    TextButton(
+                      onPressed: () async {
+                        var weatherData = await weather.getLocationWeather();
                         updateUI(weatherData);
-                      } else {
-                        print("Error");
-                      }
-                    },
-                    child: const Icon(
-                      Icons.location_city,
-                      size: 30.0,
-                      color: Color(0xFF503c52),
+                      },
+                      child: const Icon(
+                        Icons.near_me,
+                        size: 30.0,
+                        color: Color(0xFF503c52),
+                      ),
                     ),
-                  ),
-                ],
+                    TextButton(
+                      onPressed: () async {
+                        var typedName = await Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => CityScreen(),
+                          ),
+                        );
+                        if (typedName != null) {
+                          var weatherData =
+                              await weather.getCityWeather(typedName);
+                          updateUI(weatherData);
+                        } else {
+                          print("Error");
+                        }
+                      },
+                      child: const Icon(
+                        Icons.search,
+                        size: 30.0,
+                        color: Color(0xFF503c52),
+                      ),
+                    ),
+                  ],
+                ),
               ),
               Column(
                 children: <Widget>[
@@ -108,7 +112,6 @@ class _LocationScreenState extends State<LocationScreen> {
                     weatherMessage,
                     style: kMessageTextStyle,
                     textAlign: TextAlign.center,
-                    
                   ),
                   const SizedBox(
                     height: 30,
